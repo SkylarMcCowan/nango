@@ -26,7 +26,7 @@ services:
       NANGO_DB_HOST: nango-db
       NANGO_DB_NAME: nango
       RECORDS_DATABASE_URL: postgresql://nango:nango@nango-db:5432/nango
-      SERVER_PORT: 8080
+      SERVER_PORT: 3003
       CONNECT_UI_PORT: 3009
       CSP_REPORT_ONLY: "true"
       NANGO_SERVER_URL: http://localhost:3003
@@ -43,7 +43,7 @@ services:
       - ./packages/providers/providers.yaml:/app/packages/providers/providers.yaml
     restart: always
     ports:
-      - "3003:8080"   # dashboard
+      - "3003:3003"   # dashboard
       - "3009:3009"   # connect UI
     depends_on:
       - nango-db
