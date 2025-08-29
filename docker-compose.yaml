@@ -40,14 +40,14 @@ services:
 
         # Dashboard
         - traefik.http.routers.nango-dashboard.rule=Host(`nango.csa.competera.com`)
-        - traefik.http.routers.nango-dashboard.entrypoints=web
+        - traefik.http.routers.nango-dashboard.entrypoints=websecure
         - traefik.http.routers.nango-dashboard.tls.certresolver=letsencrypt
         - traefik.http.routers.nango-dashboard.service=nango-dashboard-service
         - traefik.http.services.nango-dashboard-service.loadbalancer.server.port=3003
 
         # Connect UI
         - traefik.http.routers.nango-connect.rule=Host(`nango.csa.competera.com`) && PathPrefix(`/connect`)
-        - traefik.http.routers.nango-connect.entrypoints=web
+        - traefik.http.routers.nango-connect.entrypoints=websecure
         - traefik.http.routers.nango-connect.tls.certresolver=letsencrypt
         - traefik.http.routers.nango-connect.service=nango-connect-service
         - traefik.http.services.nango-connect-service.loadbalancer.server.port=3009
