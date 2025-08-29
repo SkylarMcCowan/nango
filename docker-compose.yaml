@@ -14,7 +14,7 @@ services:
       - nango
 
   nango-server:
-    image: nangohq/nango-server:hosted
+    image: ghcr.io/nangohq/nango:hosted
     container_name: nango-server
     platform: linux/amd64
     depends_on:
@@ -38,17 +38,19 @@ services:
     labels:
         - traefik.enable=true
 
-        # Dashboard UI (on `/`)
-        - traefik.http.routers.nango-dashboard.rule=Host(`nango.csa.competera.com`) && PathRegexp(`^/(?!connect).*`)
+        # Dashboard
+        - traefik.http.routers.nango-dashboard.rule=Host(`nango.csa.competera.com`)
         - traefik.http.routers.nango-dashboard.entrypoints=websecure
         - traefik.http.routers.nango-dashboard.tls.certresolver=letsencrypt
-        - traefik.http.services.nango-dashboard.loadbalancer.server.port=3003
+        - traefik.http.routers.nango-dashboard.service=nango-dashboard-service
+        - traefik.http.services.nango-dashboard-service.loadbalancer.server.port=3003
 
-        # Connect UI (on `/connect`)
+        # Connect UI
         - traefik.http.routers.nango-connect.rule=Host(`nango.csa.competera.com`) && PathPrefix(`/connect`)
         - traefik.http.routers.nango-connect.entrypoints=websecure
         - traefik.http.routers.nango-connect.tls.certresolver=letsencrypt
-        - traefik.http.services.nango-connect.loadbalancer.server.port=3009
+        - traefik.http.routers.nango-connect.service=nango-connect-service
+        - traefik.http.services.nango-connect-service.loadbalancer.server.port=3009
     volumes:
       - ./packages/providers/providers.yaml:/app/packages/providers/providers.yaml
     restart: always
