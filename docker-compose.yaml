@@ -21,7 +21,6 @@ services:
       - nango-db
       - nango-redis
     environment:
-      # Inject these from Coolify UI or Vault
       NANGO_ENCRYPTION_KEY: ${NANGO_ENCRYPTION_KEY}
       NANGO_DB_USER: nango
       NANGO_DB_PASSWORD: nango
@@ -30,21 +29,26 @@ services:
       RECORDS_DATABASE_URL: postgresql://nango:nango@nango-db:5432/nango
       SERVER_PORT: 3003
       CONNECT_UI_PORT: 3009
-      NANGO_SERVER_URL: http://nango-server:3003
+      NANGO_SERVER_URL: https://nango.csa.competera.com
       NANGO_PUBLIC_SERVER_URL: https://nango.csa.competera.com
       NANGO_DASHBOARD_USERNAME: ${NANGO_DASHBOARD_USERNAME}
       NANGO_DASHBOARD_PASSWORD: ${NANGO_DASHBOARD_PASSWORD}
       LOG_LEVEL: info
       FLAG_SERVE_CONNECT_UI: 'true'
-    ports:
-      - '3033:3003'
-      - '3039:3009'
     labels:
-      - traefik.enable=true
-      - traefik.http.routers.nango.rule=Host(`nango.csa.competera.com`)
-      - traefik.http.routers.nango.entrypoints=websecure
-      - traefik.http.routers.nango.tls.certresolver=letsencrypt
-      - traefik.http.services.nango.loadbalancer.server.port=3003
+        - traefik.enable=true
+
+        # Dashboard UI (on `/`)
+        - traefik.http.routers.nango-dashboard.rule=Host(`nango.csa.competera.com`) && PathRegexp(`^/(?!connect).*`)
+        - traefik.http.routers.nango-dashboard.entrypoints=websecure
+        - traefik.http.routers.nango-dashboard.tls.certresolver=letsencrypt
+        - traefik.http.services.nango-dashboard.loadbalancer.server.port=3003
+
+        # Connect UI (on `/connect`)
+        - traefik.http.routers.nango-connect.rule=Host(`nango.csa.competera.com`) && PathPrefix(`/connect`)
+        - traefik.http.routers.nango-connect.entrypoints=websecure
+        - traefik.http.routers.nango-connect.tls.certresolver=letsencrypt
+        - traefik.http.services.nango-connect.loadbalancer.server.port=3009
     volumes:
       - ./packages/providers/providers.yaml:/app/packages/providers/providers.yaml
     restart: always
