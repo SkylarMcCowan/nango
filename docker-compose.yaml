@@ -14,7 +14,7 @@ services:
       - nango
 
   nango-server:
-    image: ghcr.io/nangohq/nango:hosted
+    image: /nangohq/nango-server:hosted
     container_name: nango-server
     platform: linux/amd64
     depends_on:
