@@ -56,6 +56,7 @@ services:
     restart: always
     networks:
       - nango
+      - coolify
 
   nango-redis:
     image: redis:7.2.4
@@ -67,6 +68,8 @@ services:
 
 networks:
   nango:
+  coolify:
+    external: true
 
 volumes:
   nango-db-data:
