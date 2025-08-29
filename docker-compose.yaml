@@ -69,7 +69,7 @@ services:
 
 networks:
   nango:
-  coolify:
+  a8sk8cg0swg0ww0w0ogoowog:
     external: true
 
 volumes:
