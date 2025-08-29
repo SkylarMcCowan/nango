@@ -46,7 +46,7 @@ services:
       - traefik.http.routers.nango.tls.certresolver=letsencrypt
       - traefik.http.services.nango.loadbalancer.server.port=3003
     volumes:
-      - ./packages/providers/providers.yaml:/app/nango/packages/providers/providers.yaml
+      - ./packages/providers/providers.yaml:/app/packages/providers/providers.yaml
     restart: always
     networks:
       - nango
