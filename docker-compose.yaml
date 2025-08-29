@@ -37,6 +37,7 @@ services:
       FLAG_SERVE_CONNECT_UI: 'true'
     labels:
         - traefik.enable=true
+        - traefik.docker.network=a8sk8cg0swg0ww0w0ogoowog
 
         # Dashboard
         - traefik.http.routers.nango-dashboard.rule=Host(`nango.csa.competera.com`)
@@ -56,7 +57,7 @@ services:
     restart: always
     networks:
       - nango
-      - coolify
+      - a8sk8cg0swg0ww0w0ogoowog
 
   nango-redis:
     image: redis:7.2.4
