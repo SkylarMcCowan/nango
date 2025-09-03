@@ -70,7 +70,10 @@ services:
       - traefik.http.routers.nango-connect-staging.service=nango-server-connect
       - traefik.http.services.nango-server-connect.loadbalancer.server.port=3009
     networks:
-      nango:
+      coolify:
+        aliases:
+          - nango-server
+      r04s448wso0kgs4gko0c8ssg:
         aliases:
           - nango-server
 
@@ -104,6 +107,10 @@ services:
 networks:
   nango:
     driver: bridge
+  coolify:
+    external: true
+  r04s448wso0kgs4gko0c8ssg:
+    external: true
 
 volumes:
   elasticsearch-data1:
