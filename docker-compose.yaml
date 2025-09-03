@@ -15,7 +15,7 @@ services:
     networks:
       - nango
     healthcheck:
-      test: ['CMD-SHELL', 'pg_isready -U nango -d nango']
+      test: ["CMD-SHELL", "pg_isready -U nango -d nango"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -35,11 +35,11 @@ services:
       - NANGO_DB_ADDITIONAL_SCHEMAS
       - NANGO_DB_POOL_MIN=2
       - NANGO_DB_POOL_MAX=10
-      - RECORDS_DATABASE_URL=postgresql://nango:nango@nango-db:5432/nango
+      - 'RECORDS_DATABASE_URL=postgresql://nango:nango@nango-db:5432/nango'
       - SERVER_PORT=3003
       - CSP_REPORT_ONLY=true
-      - NANGO_SERVER_URL=https://nango.csa.competera.com
-      - NANGO_PUBLIC_SERVER_URL=https://nango.csa.competera.com
+      - 'NANGO_SERVER_URL=https://nango.csa.competera.com'
+      - 'NANGO_PUBLIC_SERVER_URL=https://nango.csa.competera.com'
       - FLAG_AUTH_ENABLED=true
       - NANGO_DASHBOARD_USERNAME=admin
       - NANGO_DASHBOARD_PASSWORD=changeme
@@ -54,7 +54,7 @@ services:
     depends_on:
       - nango-db
     healthcheck:
-      test: ['CMD', 'true']
+      test: ["CMD", "true"]
     labels:
       - traefik.enable=true
 
@@ -75,19 +75,20 @@ services:
       coolify:
         aliases:
           - nango-server
-      cc44gwwc0ss4sc0w40g8ckgg:
+      r04s448wso0kgs4gko0c8ssg:
         aliases:
           - nango-server
 
   nango-redis:
-    image: redis:7.2.4
+    image: 'redis:7.2.4'
     container_name: nango-redis
     ports:
       - '16379:6379'
     networks:
       - nango
+      - coolify
     healthcheck:
-      test: ['CMD', 'redis-cli', 'ping']
+      test: ["CMD", "redis-cli", "ping"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -98,7 +99,7 @@ networks:
     driver: bridge
   coolify:
     external: true
-  cc44gwwc0ss4sc0w40g8ckgg:
+  r04s448wso0kgs4gko0c8ssg:
     external: true
 
 volumes:
