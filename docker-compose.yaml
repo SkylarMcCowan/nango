@@ -60,12 +60,6 @@ services:
             - "traefik.http.routers.nango.entrypoints=https"
             - "traefik.http.routers.nango.tls.certresolver=letsencrypt"
             - "traefik.http.services.nango.loadbalancer.server.port=3003"
-
-            - "traefik.http.routers.nango-connect.rule=Host(`nango-connect.csa.competera.com`)"
-            - "traefik.http.routers.nango-connect.entrypoints=https"
-            - "traefik.http.routers.nango-connect.tls.certresolver=letsencrypt"
-            - "traefik.http.routers.nango-connect.service=nango-connect"
-            - "traefik.http.services.nango-connect.loadbalancer.server.port=3009"
         networks:
             - nango
 
