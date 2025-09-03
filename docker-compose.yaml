@@ -67,7 +67,9 @@ services:
       - traefik.http.routers.nango-connect-staging.service=nango-server-connect
       - traefik.http.services.nango-server-connect.loadbalancer.server.port=3009
         networks:
-            - nango
+            nango:
+                aliases:
+                    - nango-server
 
     nango-redis:
         image: redis:7.2.4
