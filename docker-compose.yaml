@@ -47,6 +47,11 @@ services:
     volumes:
       - './packages/providers/providers.yaml:/app/packages/providers/providers.yaml'
     restart: always
+    healthcheck:
+      test: ["CMD", "true"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
     ports:
       - "3003:3003"
       - "3009:3009"
