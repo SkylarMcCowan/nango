@@ -33,7 +33,7 @@ services:
             - RECORDS_DATABASE_URL=${RECORDS_DATABASE_URL:-postgresql://nango:nango@nango-db:5432/nango}
             - SERVER_PORT
             - CSP_REPORT_ONLY=true
-            - NANGO_SERVER_URL=http://localhost:3003
+            - NANGO_SERVER_URL=https://nango.csa.competera.com
             - NANGO_PUBLIC_SERVER_URL=https://nango.csa.competera.com
             - FLAG_AUTH_ENABLED
             - NANGO_DASHBOARD_USERNAME
@@ -55,11 +55,17 @@ services:
             - nango-db
             # - nango-elasticsearch
         labels:
-            - "traefik.enable=true"
-            - "traefik.http.routers.nango.rule=Host(`nango.csa.competera.com`)"
-            - "traefik.http.routers.nango.entrypoints=https"
-            - "traefik.http.routers.nango.tls.certresolver=letsencrypt"
-            - "traefik.http.services.nango.loadbalancer.server.port=3003"
+      - traefik.enable=true
+      - traefik.http.routers.nango-staging.rule=Host(`nango-staging.csa.competera.com`)
+      - traefik.http.routers.nango-staging.entrypoints=https
+      - traefik.http.routers.nango-staging.tls.certresolver=letsencrypt
+      - traefik.http.routers.nango-staging.service=nango-server
+      - traefik.http.services.nango-server.loadbalancer.server.port=3003
+      - traefik.http.routers.nango-connect-staging.rule=Host(`nango-connect-staging.csa.competera.com`)
+      - traefik.http.routers.nango-connect-staging.entrypoints=https
+      - traefik.http.routers.nango-connect-staging.tls.certresolver=letsencrypt
+      - traefik.http.routers.nango-connect-staging.service=nango-server-connect
+      - traefik.http.services.nango-server-connect.loadbalancer.server.port=3009
         networks:
             - nango
 
