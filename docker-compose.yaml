@@ -57,7 +57,7 @@ services:
         labels:
             - "traefik.enable=true"
             - "traefik.http.routers.nango.rule=Host(`nango.csa.competera.com`)"
-            - "traefik.http.routers.nango.entrypoints=websecure"
+            - "traefik.http.routers.nango.entrypoints=https"
             - "traefik.http.routers.nango.tls.certresolver=letsencrypt"
             - "traefik.http.services.nango.loadbalancer.server.port=3003"
         networks:
